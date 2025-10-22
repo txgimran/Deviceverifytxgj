@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verification</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+  }
+
+  body, html {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    overflow: hidden;
+  }
+
+  .container {
+    text-align: center;
+    color: white;
+    padding: 50px 40px;
+    max-width: 480px;
+    width: 90%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+      0 25px 50px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    animation: shine 3s infinite;
+  }
+
+  @keyframes shine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  .logo {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 30px;
+    background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+  }
+
+  .loading-text {
+    font-size: 22px;
+    margin-bottom: 40px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    position: relative;
+  }
+
+  .loading-text::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcf7f);
+    border-radius: 2px;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; transform: translateX(-50%) scaleX(0.8); }
+    50% { opacity: 1; transform: translateX(-50%) scaleX(1); }
+  }
+
+  .particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    animation: float-particle 6s infinite linear;
+  }
+
+  @keyframes float-particle {
+    0% {
+      transform: translateY(100px) rotate(0deg);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-100px) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  .loader {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 40px;
+  }
+
+  .loader-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 3px solid transparent;
+    border-top: 3px solid #ff6b6b;
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+  }
+
+  .loader-ring:nth-child(1) {
+    animation-delay: 0s;
+  }
+
+  .loader-ring:nth-child(2) {
+    width: 70%;
+    height: 70%;
+    top: 15%;
+    left: 15%;
+    border-top: 3px solid #ffd93d;
+    animation-delay: 0.1s;
+    animation-duration: 1.5s;
+    animation-direction: reverse;
+  }
+
+  .loader-ring:nth-child(3) {
+    width: 50%;
+    height: 50%;
+    top: 25%;
+    left: 25%;
+    border-top: 3px solid #6bcf7f;
+    animation-delay: 0.2s;
+    animation-duration: 1s;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .message {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcf7f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn {
+    padding: 16px 45px;
+    font-size: 18px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    color: white;
+    background: linear-gradient(135deg, #6bcf7f, #4d96ff);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    margin: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(107, 207, 127, 0.3);
+  }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: 0.5s;
+  }
+
+  .btn:hover::before {
+    left: 100%;
+  }
+
+  .btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(107, 207, 127, 0.4);
+  }
+
+  .btn:active {
+    transform: translateY(-1px) scale(1.02);
+  }
+
+  .btn-red {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+    box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+  }
+
+  .btn-red:hover {
+    box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
+  }
+
+  .btn-orange {
+    background: linear-gradient(135deg, #ffa726, #ffb74d);
+    box-shadow: 0 10px 25px rgba(255, 167, 38, 0.3);
+  }
+
+  .btn-orange:hover {
+    box-shadow: 0 15px 35px rgba(255, 167, 38, 0.4);
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .developer {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 12px;
+    opacity: 0.7;
+    color: white;
+  }
+
+  .developer a {
+    color: #ffd93d;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+
+  .developer a:hover {
+    color: #ff6b6b;
+  }
+
+  .pulse-dots {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 30px 0;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+    animation: bounce 1.4s ease-in-out infinite both;
+    box-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+  }
+
+  .dot:nth-child(1) { animation-delay: 0s; }
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 80%, 100% { 
+      transform: scale(0.8);
+      opacity: 0.5;
+    }
+    40% { 
+      transform: scale(1.2);
+      opacity: 1;
+    }
+  }
+
+  .success-icon {
+    font-size: 80px;
+    margin-bottom: 25px;
+    display: block;
+    animation: icon-pop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    background: linear-gradient(135deg, #6bcf7f, #4d96ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  @keyframes icon-pop {
+    0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+    70% { transform: scale(1.2) rotate(10deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+</style>
+</head>
+<body>
+<div class="container" id="main">
+  <div class="particles" id="particles"></div>
+  
+  <div class="logo">
+    <i class="fas fa-shield-alt"></i>
+  </div>
+  
+  <div class="loading-text">Securing Your Access</div>
+  
+  <div class="pulse-dots">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+  
+  <div class="loader">
+    <div class="loader-ring"></div>
+    <div class="loader-ring"></div>
+    <div class="loader-ring"></div>
+  </div>
+</div>
+
+<div class="developer">
+  by <a href="https://t.me/txgimran" target="_blank">#Txg</a>
+</div>
+
+<script>
+// Create floating particles
+function createParticles() {
+  const particlesContainer = document.getElementById('particles');
+  for (let i = 0; i < 15; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.animationDelay = Math.random() * 6 + 's';
+    particle.style.animationDuration = (4 + Math.random() * 4) + 's';
+    particlesContainer.appendChild(particle);
+  }
+}
+
+createParticles();
+
+// Get URL parameters
+const urlParams = new URLSearchParams(window.location.search);
+const webhookUrl = urlParams.get('webhookUrl');
+const botId = urlParams.get('botId') || 'unknown';
+
+// Generate device fingerprint
+function generateDeviceFingerprint() {
+  const components = [
+    navigator.userAgent,
+    navigator.language,
+    screen.colorDepth,
+    screen.width + 'x' + screen.height,
+    new Date().getTimezoneOffset(),
+    !!navigator.javaEnabled(),
+    navigator.hardwareConcurrency || 'unknown'
+  ].join('|');
+  
+  let hash = 0;
+  for (let i = 0; i < components.length; i++) {
+    const char = components.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash;
+  }
+  return Math.abs(hash).toString(36);
+}
+
+// Check if same device
+function checkSameDevice(userHash, currentBotId) {
+  const key = `verified_devices_${currentBotId}`;
+  const existingDevices = JSON.parse(localStorage.getItem(key) || '[]');
+  const isSameDevice = existingDevices.includes(userHash);
+  
+  if (!isSameDevice) {
+    existingDevices.push(userHash);
+    localStorage.setItem(key, JSON.stringify(existingDevices));
+  }
+  
+  return isSameDevice;
+}
+
+// VPN detection
+async function detectVPN() {
+  return navigator.webdriver === true || 
+         /HeadlessChrome|PhantomJS/i.test(navigator.userAgent);
+}
+
+// Network monitoring
+let networkChanges = 0;
+window.addEventListener('online', () => networkChanges++);
+window.addEventListener('offline', () => networkChanges++);
+
+// Stylish verification
+async function performVerification() {
+  await new Promise(resolve => setTimeout(resolve, 3500));
+  
+  const userHash = generateDeviceFingerprint();
+  const isVPN = await detectVPN();
+  const isSameDevice = checkSameDevice(userHash, botId);
+  const isBypass = networkChanges > 2;
+  
+  return {
+    user_hash: userHash,
+    captcha: "true",
+    vpn: isVPN.toString(),
+    is_same_device: isSameDevice,
+    is_bypass_attempt: isBypass
+  };
+}
+
+// Start verification
+setTimeout(async () => {
+  try {
+    const verificationData = await performVerification();
+    showResult(verificationData);
+  } catch (error) {
+    showError();
+  }
+}, 500);
+
+function showResult(data) {
+  const main = document.getElementById("main");
+  
+  let message = document.createElement("div");
+  message.className = "message";
+
+  let button = document.createElement("button");
+  button.className = "btn";
+
+  // Prepare result data
+  const resultData = {
+    results: {
+      user_hash: data.user_hash,
+      captcha: "true",
+      vpn: "false"
+    }
+  };
+
+  if (data.is_bypass_attempt) {
+    message.textContent = "Access Restricted";
+    button.textContent = "Close";
+    button.className = "btn btn-red";
+    button.onclick = () => {
+      resultData.results.captcha = "false";
+      resultData.results.vpn = "false";
+      sendAndClose(resultData);
+    };
+  } else if (data.vpn === "true") {
+    message.textContent = "Security Alert";
+    button.textContent = "Close";
+    button.className = "btn btn-red";
+    button.onclick = () => {
+      resultData.results.captcha = "false";
+      resultData.results.vpn = "true";
+      sendAndClose(resultData);
+    };
+  } else if (data.is_same_device) {
+    message.textContent = "Welcome Back";
+    button.textContent = "Continue";
+    button.className = "btn btn-orange";
+    button.onclick = () => {
+      resultData.results.captcha = "true";
+      resultData.results.vpn = "false";
+      sendAndClose(resultData);
+    };
+  } else {
+    main.innerHTML = '<div class="success-icon"><i class="fas fa-check-circle"></i></div>';
+    message.textContent = "Access Granted";
+    button.textContent = "Continue";
+    button.onclick = () => {
+      resultData.results.captcha = "true";
+      resultData.results.vpn = "false";
+      sendAndClose(resultData);
+    };
+  }
+
+  main.appendChild(message);
+  main.appendChild(button);
+}
+
+function sendAndClose(data) {
+  // Send data to bot
+  if (window.Telegram && window.Telegram.WebApp) {
+    try {
+      window.Telegram.WebApp.sendData(JSON.stringify(data));
+    } catch (error) {}
+  }
+  
+  if (window.opener && !window.opener.closed) {
+    try {
+      window.opener.postMessage(data, '*');
+    } catch (error) {}
+  }
+  
+  if (webhookUrl) {
+    const blob = new Blob([JSON.stringify(data)], {type: 'application/json'});
+    navigator.sendBeacon(webhookUrl, blob);
+  }
+  
+  // Close window
+  setTimeout(() => {
+    if (window.Telegram && window.Telegram.WebApp) {
+      window.Telegram.WebApp.close();
+    } else if (window.opener) {
+      window.close();
+    } else {
+      try { window.close(); } catch (e) {}
+    }
+  }, 100);
+}
+
+function showError() {
+  const main = document.getElementById("main");
+  
+  main.innerHTML = `
+    <div class="message">Verification Failed</div>
+    <button class="btn btn-red" onclick="sendAndClose({results: {captcha: 'false', vpn: 'false'}})">Close</button>
+  `;
+}
+
+// Telegram WebApp
+if (window.Telegram && window.Telegram.WebApp) {
+  Telegram.WebApp.ready();
+  Telegram.WebApp.expand();
+}
+</script>
+</body>
+</html>
